@@ -1,0 +1,14 @@
+from Display import *
+from ReadData import *
+from CharacterRecognition import *
+
+model = LogisticModel()
+model.train(images[:1000], labels[:1000])
+model.correct(images[1000:2000], labels[1000:2000])
+
+def compare(i):
+    print "The model thinks it should be: ", model.predict(images[i])
+    print "The image is..."
+    Display.image_from_np_row(images[i])
+
+compare(13)

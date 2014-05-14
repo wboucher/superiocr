@@ -1,0 +1,8 @@
+from Preprocessing       import *
+from Segmentation        import *
+from CharacterRecogntion import *
+from Postprocessing      import *
+
+infile = raw_input("Enter the filename, minus the png extension: ")
+
+pre_processed = pre_process(infile)

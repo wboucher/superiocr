@@ -1,0 +1,3 @@
+import os, struct
+
+def read_mnist(digits, data=)

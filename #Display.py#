@@ -1,0 +1,52 @@
+from PIL import Image
+from pylab import *
+import numpy as np
+
+# This function takes in a numpy array encoding an image as a greyscale single
+# row vector, reshapes it, and gives you a PIL image, which can be shown using
+# .show()
+def image_from_np_row(row, shape=(28,28)):
+    arr = row.reshape(shape).astype(np.uint8)
+    return Image.fromarray(arr)
+
+def image_to_np(image):
+    return np.asarray(image).convert("l")
+
+feat_shape = feature_matrix.shape
+    out_shape  = (input_shape[0] - 2, input_shape[1] - 2)
+
+
+    undo_shape = (out_shape[0]*out_shape[1]*input_shape[0]*input_shape[1], feat_shape[0]*feat_shape[1])
+
+    undo = np.zeros(undo_shape)
+    print undo.shape
+
+    feature_slice = np.zeros(to_row_vector_index(input_shape, (feat_shape[0] - 1, feat_shape[1] - 1))+1)
+    for row in range(feat_shape[0]):
+        for col in range(feat_shape[1]):
+            index = to_row_vector_index(input_shape, (row, col))
+            feature_slice[index] = feature_matrix[row, col]
+            
+            for out_row in range(out_shape[0]):
+                for out_col in range(out_shape[1]):
+                    output_index = to_row_vector_index(out_shape, (out_row, out_col))
+                    offset = to_row_vector_index(input_shape, (out_row, out_col))
+
+                    undo_index = to_row_vector_index(undo_shape, (offset + index, output_index))
+                    feat_index = to_row_vector_index(feat_shape, (row, col))
+
+                    undo[undo_index, feat_index] = 1.0 / (out_shape[0] * out_shape[1])
+    end = len(feature_slice)
+
+    ans = np.zeros((input_shape[0]*input_shape[1], out_shape[0]*out_shape[1]))
+    for row in range(out_shape[0]):
+        for col in range(out_shape[1]):
+            cur_output_index = to_row_vector_index(out_shape, (row, col))
+            offset = to_row_vector_index(input_shape, (row, col))
+            print offset
+            print end
+            print ans.shape
+            print ans[offset:offset + end, cur_output_index].shape
+            ans[offset:offset + end, cur_output_index] = feature_slice
+
+    return ans, undo

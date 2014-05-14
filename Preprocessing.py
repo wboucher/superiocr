@@ -1,0 +1,24 @@
+import Image, ImageFilter
+import numpy as np
+
+#infile = raw_input("Enter the filename, minus the png extension: ")
+#filename = infile + ".png"
+
+def preprocess(infile):
+
+    filename = infile + ".png"
+    im = Image.open(filename)
+    print im.format, im.size, im.mode
+    
+    im_sharpened = im.filter(ImageFilter.SHARPEN)
+    im_sharpened_filename = infile + "_sharpened.png"
+    im_sharpened.save(im_sharpened_filename)
+
+
+    #converts the image to greyscale, then black and white
+    gry = im_sharpened.convert('L')
+    bw = gry.point(lambda x: 0 if x<128 else 255, '1')
+    bw_filename = infile + "_bw.png"
+    bw.save(bw_filename)
+
+    return bw

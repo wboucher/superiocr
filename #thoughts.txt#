@@ -1,0 +1,23 @@
+I wrote up a bit of stuff to just get more familiar with how the images work. This lets us read in MNIST images (only 0-9), train on them, make a prediction, and display the image.
+
+Some thoughts on structure
+
+ReadData.py can contain methods for reading in all of the training sets we have, returning a numpy array for the images in the set, and a list for their labels.
+
+The Model class can handle our current classification needs, though we might later extend the interfact to give you a likelihood distribution over possible classifications, which could be useful in post-processing.
+
+Display.py should just have utility functions for displaying images.
+
+The current flow goes from ReadData -> CharacterRecognition -> Display, so it currently just skips over Segmentation and PostProcessing.
+
+How images work:
+
+If we have N RxC greyscale images, then it should be represented as a numpy matrix containing N rows, and R*C columns. We can get a single image back out using Display.image_from_np_row, which reshapes the matrix on a single row.
+
+
+Things we need
+
+Pre-processing
+Character Segmentation
+Character Recognition
+Post-processing

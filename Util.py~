@@ -1,0 +1,4 @@
+import numpy as np
+
+def no_grey(image, threshold = 128):
+    return 256 * np.array(image < threshold, dtype = int)

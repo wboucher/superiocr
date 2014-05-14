@@ -1,0 +1,7 @@
+from PIL import Image
+from pylab import *
+import numpy as np
+
+def image_from_np_row(row, shape=(28,28)):
+    arr = row.reshape(shape).astype(np.uint8)
+    return Image.fromarray(arr)
